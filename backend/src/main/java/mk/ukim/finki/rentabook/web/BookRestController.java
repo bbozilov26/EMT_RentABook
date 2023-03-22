@@ -26,7 +26,7 @@ public class BookRestController {
         return bookService.getAllBooks();
     }
 
-    @GetMapping("/list/{page}/{size}")
+    @GetMapping("/getPaged/{page}/{size}")
     public List<Book> getAllBooksByPage(@PathVariable int page, @PathVariable int size) {
         return bookService.getAllBooksByPage(Pageable.ofSize(size).withPage(page));
     }

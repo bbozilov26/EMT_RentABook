@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryRestController {
 
-    @GetMapping("/list")
+    @GetMapping("/getAll")
     public List<Category> getAllCategories() {
         return Arrays.asList(Category.values());
     }
