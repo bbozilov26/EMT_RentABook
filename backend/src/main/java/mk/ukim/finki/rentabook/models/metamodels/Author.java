@@ -10,7 +10,7 @@ import mk.ukim.finki.rentabook.models.BaseEntity;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "mm_authors", schema = "metamodel")
+@Table(name = "mm_authors")
 public class Author extends BaseEntity {
 
     @Column(name = "surname")

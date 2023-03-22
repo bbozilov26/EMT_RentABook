@@ -11,7 +11,7 @@ import mk.ukim.finki.rentabook.models.enumerations.Category;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "mm_books", schema = "metamodel")
+@Table(name = "mm_books")
 public class Book extends BaseEntity {
 
     @Column(name = "category")

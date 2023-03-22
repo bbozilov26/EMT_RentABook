@@ -12,7 +12,7 @@ import mk.ukim.finki.rentabook.models.BaseEntity;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "mm_country", schema = "metamodel")
+@Table(name = "mm_country")
 public class Country extends BaseEntity {
 
     @Column(name = "continent")
