@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -29,21 +30,21 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBookById(Long id) {
-        return bookRepository.findById(id).orElseThrow(BookDoesNotExistException::new);
+    public Optional<Book> getBookById(Long id) {
+        return bookRepository.findById(id);
     }
 
     @Override
-    public Book addBook(BookDTO book) {
+    public Optional<Book> addBook(BookDTO bookDTO) {
         Book b = new Book();
-        return saveBook(book, b);
+        return Optional.of(saveBook(bookDTO, b));
     }
 
     @Override
-    public Book editBook(Long id, BookDTO book) {
+    public Optional<Book> editBook(Long id, BookDTO bookDTO) {
         Book b = bookRepository.findById(id).orElseThrow(BookDoesNotExistException::new);
 
-        return saveBook(book, b);
+        return Optional.of(saveBook(bookDTO, b));
     }
 
     @Override
@@ -64,17 +65,15 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(withPage).getContent();
     }
 
-    private Book saveBook(BookDTO book, Book b) {
-        Author a = authorService.getAuthorById(book.getAuthor().getId());
+    private Book saveBook(BookDTO bookDTO, Book b) {
+        Optional<Author> a = authorService.getAuthorById(bookDTO.getAuthor().getId());
 
-        b.setName(book.getName());
-        b.setCategory(book.getCategory());
+        b.setName(bookDTO.getName());
+        b.setCategory(bookDTO.getCategory());
 
-        if(a != null) {
-            b.setAuthor(a);
-        }
+        a.ifPresent(b::setAuthor);
 
-        b.setAvailableCopies(book.getAvailableCopies());
+        b.setAvailableCopies(bookDTO.getAvailableCopies());
 
         return bookRepository.save(b);
     }

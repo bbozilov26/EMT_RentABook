@@ -4,15 +4,16 @@ import mk.ukim.finki.rentabook.models.dto.AuthorDTO;
 import mk.ukim.finki.rentabook.models.metamodels.Author;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthorService {
     List<Author> getAllAuthors();
 
-    Author getAuthorById(Long id);
+    Optional<Author> getAuthorById(Long id);
 
-    Author addAuthor(AuthorDTO author);
+    Optional<Author> addAuthor(AuthorDTO authorDTO);
 
-    Author editAuthor(Long id, AuthorDTO author);
+    Optional<Author> editAuthor(Long id, AuthorDTO authorDTO);
 
     void deleteAuthor(Long id);
 }

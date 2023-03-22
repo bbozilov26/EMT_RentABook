@@ -8,6 +8,7 @@ import mk.ukim.finki.rentabook.service.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -24,28 +25,33 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Country getCountryById(Long country) {
-        return countryRepository.findById(country).orElseThrow(CountryDoesNotExistException::new);
+    public Optional<Country> getCountryById(Long country) {
+        return countryRepository.findById(country);
     }
 
     @Override
-    public Country addCountry(CountryDTO country) {
+    public Optional<Country> addCountry(CountryDTO countryDTO) {
         Country newCountry = new Country();
-        newCountry.setName(country.getName());
 
-        return countryRepository.save(newCountry);
+        return Optional.of(saveCountry(countryDTO, newCountry));
     }
 
     @Override
-    public Country editCountry(Long id, CountryDTO country) {
-        Country newCountry = countryRepository.findById(id).orElseThrow(CountryDoesNotExistException::new);
-        newCountry.setName(country.getName());
+    public Optional<Country> editCountry(Long id, CountryDTO countryDTO) {
+        Country country = countryRepository.findById(id).orElseThrow(CountryDoesNotExistException::new);
 
-        return countryRepository.save(newCountry);
+        return Optional.of(saveCountry(countryDTO, country));
     }
 
     @Override
     public void deleteCountry(Long id) {
         countryRepository.deleteById(id);
+    }
+
+    private Country saveCountry(CountryDTO countryDTO, Country country){
+        country.setName(countryDTO.getName());
+        country.setContinent(countryDTO.getContinent());
+
+        return countryRepository.save(country);
     }
 }

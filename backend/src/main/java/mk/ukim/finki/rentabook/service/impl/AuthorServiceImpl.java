@@ -10,6 +10,7 @@ import mk.ukim.finki.rentabook.service.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -28,21 +29,21 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author getAuthorById(Long id) {
-        return authorRepository.findById(id).orElseThrow(AuthorDoesNotExistException::new);
+    public Optional<Author> getAuthorById(Long id) {
+        return authorRepository.findById(id);
     }
 
     @Override
-    public Author addAuthor(AuthorDTO author) {
+    public Optional<Author> addAuthor(AuthorDTO authorDTO) {
         Author a = new Author();
-        return saveAuthor(author, a);
+        return Optional.of(saveAuthor(authorDTO, a));
     }
 
     @Override
-    public Author editAuthor(Long id, AuthorDTO author) {
+    public Optional<Author> editAuthor(Long id, AuthorDTO authorDTO) {
         Author a = authorRepository.findById(id).orElseThrow(AuthorDoesNotExistException::new);
 
-        return saveAuthor(author, a);
+        return Optional.of(saveAuthor(authorDTO, a));
     }
 
     @Override
@@ -51,14 +52,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     private Author saveAuthor(AuthorDTO author, Author a) {
-        Country c = countryService.getCountryById(author.getCountry().getId());
+        Optional<Country> c = countryService.getCountryById(author.getCountry().getId());
 
         a.setName(author.getName());
         a.setSurname(author.getSurname());
 
-        if(c != null) {
-            a.setCountry(c);
-        }
+        c.ifPresent(a::setCountry);
 
         return authorRepository.save(a);
     }
