@@ -1,4 +1,4 @@
-const backendUrl = "http://localhost:8080";
+const backendUrl = "http://localhost:9091";
 
 export async function getBooks(): Promise<Book[]> {
     const url = `${backendUrl}/api/books/list`;
@@ -25,50 +25,50 @@ export async function getBookById(id: number): Promise<Book> {
     return await (await fetch(url)).json();
 }
 
-export async function addBook(
+export function addBook(
     book: Omit<Partial<Book>, "author"> & { author: number }
 ): Promise<Book> {
     const url = `${backendUrl}/api/books/add`;
-    return await (
-        await fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(book),
-        })
-    ).json();
+    return fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(book),
+    })
+        .then((response) => response.json())
+        .catch((error) => console.error(error));
 }
 
-export async function editBook(
+export function editBook(
     book: Omit<Book, "author"> & { author: number }
 ): Promise<Book> {
     const url = `${backendUrl}/api/books/edit/${book.id}`;
-    return await (
-        await fetch(url, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(book),
-        })
-    ).json();
+    return fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(book),
+    })
+        .then((response) => response.json())
+        .catch((error) => console.error(error));
 }
 
-export async function deleteBook(id: number): Promise<Book> {
+export function deleteBook(id: number): Promise<Book> {
     const url = `${backendUrl}/api/books/delete/${id}`;
-    return await (
-        await fetch(url, {
-            method: "DELETE",
-        })
-    ).json();
+    return fetch(url, {
+        method: "DELETE",
+    })
+        .then((response) => response.json())
+        .catch((error) => console.error(error));
 }
 
-export async function markBook(id: number): Promise<Book> {
+export function markBook(id: number): Promise<Book> {
     const url = `${backendUrl}/api/books/mark/${id}`;
-    return await (
-        await fetch(url, {
-            method: "PUT",
-        })
-    ).json();
+    return fetch(url, {
+        method: "PUT",
+    })
+        .then((response) => response.json())
+        .catch((error) => console.error(error));
 }

@@ -1,14 +1,16 @@
 import { Suspense, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { getAuthors, getBooks, getCategories } from "../../api";
-import Authors from "../authors/Authors";
-import BookDelete from "../books/book-delete/BookDelete";
-import BookForm from "../books/book-form/BookForm";
-import BookMark from "../books/book-mark/BookMark";
-import Books from "../books/Books";
-import Categories from "../categories/Categories";
-import Header from "../header/Header";
+import { getAuthors, getBooks, getCategories } from "./api";
+import Authors from "../app/components/authors/Authors";
+import BookDelete from "../app/components/books/book-delete/BookDelete";
+import BookForm from "../app/components/books/book-form/BookForm";
+import BookMark from "../app/components/books/book-mark/BookMark";
+import Books from "../app/components/books/Books";
+import Categories from "../app/components/categories/Categories";
+import Header from "../app/components/header/Header";
+// import logo from '../../logo.svg';
+import './App.css';
 
 export default function App() {
     const [books, setBooks] = useState<Book[]>([]);
