@@ -12,5 +12,5 @@ public class AuthorDTO {
     Long id;
     String name;
     String surname;
-    Country country;
+    Long countryId;
 }

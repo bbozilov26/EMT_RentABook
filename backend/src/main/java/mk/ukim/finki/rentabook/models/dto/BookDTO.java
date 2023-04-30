@@ -13,6 +13,6 @@ public class BookDTO {
     Long id;
     String name;
     Category category;
-    Author author;
+    Long authorId;
     Integer availableCopies;
 }

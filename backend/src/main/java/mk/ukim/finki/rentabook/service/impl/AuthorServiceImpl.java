@@ -51,11 +51,11 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.deleteById(id);
     }
 
-    private Author saveAuthor(AuthorDTO author, Author a) {
-        Optional<Country> c = countryService.getCountryById(author.getCountry().getId());
+    private Author saveAuthor(AuthorDTO authorDTO, Author a) {
+        Optional<Country> c = countryService.getCountryById(authorDTO.getCountryId());
 
-        a.setName(author.getName());
-        a.setSurname(author.getSurname());
+        a.setName(authorDTO.getName());
+        a.setSurname(authorDTO.getSurname());
 
         c.ifPresent(a::setCountry);
 

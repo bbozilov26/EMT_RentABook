@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private Book saveBook(BookDTO bookDTO, Book b) {
-        Optional<Author> a = authorService.getAuthorById(bookDTO.getAuthor().getId());
+        Optional<Author> a = authorService.getAuthorById(bookDTO.getAuthorId());
 
         b.setName(bookDTO.getName());
         b.setCategory(bookDTO.getCategory());
